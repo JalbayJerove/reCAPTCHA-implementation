@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login reCAPTCHA V2</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<style>
+    body {
+        background-color: lightblue;
+    }
+
+    form {
+        background-color: white; /* Background color of the form */
+        width: 25%; /* Width of the form */
+        margin: 120px auto; /* Centering the form vertically and horizontally */
+        padding: 50px; /* Padding inside the form */
+        box-shadow: 10px 10px 5px rgb(105,15,190); /* Adding a drop shadow to the form */
+        border-radius: 50px; /* Rounded corners for the form */
+    }
+</style>
+<body>
+    <!-- Login form -->
+    <form id="loginForm">
+        <h1>Login Form</h1>
+        <input id="usernameInput" type="text" name="username" placeholder="Username"><br><br>
+        <input id="passwordInput" type="password" name="password" placeholder="Password"><br><br>
+        <button type="submit">Login</button>
+        <div class="g-recaptcha" data-sitekey="6Ldsv0oqAAAAALiaJUmeI3JML_G-vFLXAWbqrXLG"></div>
+    </form>
+
+    <script>
+        // Adding event listener to the form submission
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get the value of the username and password input fields
+            var enteredUsername = document.getElementById('usernameInput').value;
+            var enteredPassword = document.getElementById('passwordInput').value;
+
+            // Get the reCAPTCHA response
+            var captchaResponse = grecaptcha.getResponse();
+
+            // Check if the reCAPTCHA was completed
+            if (!captchaResponse) {
+                alert('Please complete reCAPTCHA!');
+                return;
+            }
+
+            // Check if the username and password are correct
+            if (enteredUsername === "jerove" && enteredPassword === "jerove07") {
+                alert('Login successful');
+                window.location.href = "admin.php"; // Redirect to the admin page on successful login
+            } else {
+                alert("Invalid username or password");
+            }
+
+            console.log('Form submitted', { enteredUsername, enteredPassword, captchaResponse });
+        });
+    </script>
+</body>
+</html>
